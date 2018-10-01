@@ -1,0 +1,23 @@
+create_a_user:
+    path: /user
+    methods: [POST]
+    defaults:
+        _controller: connect_in.controller.user:createAUserAction
+
+registered_users:
+    path: /users
+    methods: [GET]
+    defaults:
+        _controller: connect_in.controller.user:getUsersAction
+
+add_a_friend:
+    path: /user/addFriend
+    methods: [POST]
+    defaults:
+        _controller: connect_in.controller.user:addFriendAction
+
+list_of_friends_for_a_user:
+    path: /user/{userId}/friends
+    methods: [GET]
+    defaults:
+        _controller: connect_in.controller.list_of_friends_for_a_user:getFriendsAction

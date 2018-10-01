@@ -1,0 +1,28 @@
+services:
+  connect_in.read_model.repository.registered_users:
+    class: Broadway\ReadModel\ReadModel
+    factory: ['@broadway.read_model.repository_factory', create]
+    arguments:
+      - 'connect_in.registered_users'
+      - 'ConnectIn\ReadModel\Repository\RegisteredUsers'
+
+  connect_in.read_model.repository.list_of_friends_for_a_user:
+    class: Broadway\ReadModel\ReadModel
+    factory: ['@broadway.read_model.repository_factory', create]
+    arguments:
+      - 'connect_in.list_of_friends_for_a_user'
+      - 'ConnectIn\ReadModel\Repository\ListOfFriendsForAUser'
+
+  connect_in.read_model.projector.registered_users:
+    class: ConnectIn\ReadModel\Projector\RegisteredUsers
+    arguments:
+      - '@connect_in.read_model.repository.registered_users'
+    tags:
+      - { name: broadway.domain.event_listener }
+
+  connect_in.read_model.projector.list_of_friends_for_a_user:
+    class: ConnectIn\ReadModel\Projector\ListOfFriendsForAUser
+    arguments:
+      - '@connect_in.read_model.repository.list_of_friends_for_a_user'
+    tags:
+      - { name: broadway.domain.event_listener }

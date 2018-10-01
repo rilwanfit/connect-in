@@ -1,0 +1,7 @@
+services:
+  connect_in.user.command_handler:
+    class: ConnectIn\Command\UserCommandHandler
+    arguments:
+      - '@connect_in.user.repository'
+    tags:
+      - { name: broadway.command_handler }

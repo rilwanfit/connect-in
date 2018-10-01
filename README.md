@@ -35,7 +35,7 @@ docker-compose up -d
 docker-compose exec app /bin/bash
 app/console broadway:event-store:schema:init
 ```
-
+us
 Docker-compose will set up the containers needed to run this app.
 
 To make sure the app running properly
@@ -58,11 +58,9 @@ This app doesn't have a GUI, only an API with the following endpoints:
 | Method | Path | Description | Action |
 |--------|------|-------------| ------- |
 | POST | `/user` | Create a new user, name should be given as form fields) and returns the userId | ```curl -X -F 'name=$name' POST localhost:8100/user ``` |
-| POST | `/group` | Create a new group, returns the groupId | ```curl -X POST localhost:8100/group ``` |
-| POST | `/group/{groupId}/addUser` | Add a user to a group (name should be given as form fields) and returns the userId| ``` curl -X POST -F 'name=rilwan' localhost:8100/group/$groupId/addUser ``` |
-| GET | `/groups` | Retrieve list of groups  | ``` curl localhost:8100/groups ```
-| GET | `/group/{groupId}/users` | Retrieve list of users in a group  | ``` curl localhost:8100/group/$groupId/users ```
-| POST | `/user/addFriend` | Add a friend to a user (userId and friendId should be given as form fields) and returns the userId| ``` curl -X POST -F 'name=rilwan' localhost:8100/user/addFriend ``` |
+| GET | `/users` | Retrieve registered users  | ``` curl localhost:8100/users ```
+| POST | `/user/addFriend` | Add a friend to a user (userId and friendId should be given as form fields) and returns the userId| ``` curl -X POST localhost:8100/user/addFriend ``` |
+| GET | `/user/{userId}/friends` | Retrieve list of friends for a user  | ``` curl localhost:8100/user/$userId/friends ```
 
 ### Elasticsearch web ui
 
@@ -70,6 +68,11 @@ You can access the elasticsearch;
 main index `broadway_demo.people_that_bought_this_product`
 
 http://localhost:9200/_plugin/head/
+
+delete an index
+```sh
+curl -XDELETE localhost:9200/connect_in.registered_user
+```
 
 ## Code structure
 

@@ -1,0 +1,7 @@
+services:
+  connect_in.user.repository:
+    class: ConnectIn\Repository\UserRepository
+    arguments:
+      - '@broadway.event_store'
+      - '@broadway.event_handling.event_bus'
+      - ['@broadway.metadata_enriching_event_stream_decorator']
