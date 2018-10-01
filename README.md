@@ -65,7 +65,7 @@ This app doesn't have a GUI, only an API with the following endpoints:
 ### Elasticsearch web ui
 
 You can access the elasticsearch; 
-main index `broadway_demo.people_that_bought_this_product`
+main index `connect_in.registered_user`, `connect_in.list_of_friends_for_a_user`
 
 http://localhost:9200/_plugin/head/
 
