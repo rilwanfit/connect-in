@@ -80,9 +80,11 @@ curl -XDELETE localhost:9200/connect_in.registered_user
 - ReadModel code can be found in `src/ConnectIn/ReadModel`
 - Controller / services can be found in `src/ConnectInBundle`
 
+### Note:
+Events table with some example data is added with this repository.
+1. to see list of users: http://localhost:8100/users
+2. to see user's connections: http://localhost:8100/user/5cdafda7-386b-47eb-a313-d67f1a664580/friends
 
-The domain specific tests can be found in `test/BroadwayDemo/Basket` and `test/BroadwayDemo/ReadModel`
 
-Note that there is a functional test (using ElasticSearch) in `test/BroadwayDemoBundle/Functional`
 
 For more information, rilwanfit@gmail.com

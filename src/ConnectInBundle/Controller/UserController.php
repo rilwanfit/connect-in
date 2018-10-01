@@ -10,12 +10,11 @@ use Broadway\UuidGenerator\UuidGeneratorInterface;
 use ConnectIn\Command\AddFriend;
 use ConnectIn\Command\CreateAUser;
 use ConnectIn\Exception\NoRegisteredUserException;
+use ConnectIn\Exception\ReadModelNotAvailable;
 use ConnectIn\User;
 use ConnectIn\UserId;
-use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class UserController
@@ -38,32 +37,47 @@ class UserController
 
     public function createAUserAction(Request $request): JsonResponse
     {
-        $userId = new UserId($this->uuidGenerator->generate());
-        $name = $request->request->get('name');
+        try {
+            $userId = new UserId($this->uuidGenerator->generate());
+            $name = $request->request->get('name');
 
-        Assert::notNull($name);
+            Assert::notNull($name);
 
-        $command  = new CreateAUser(new User($userId, $name));
-        $this->commandBus->dispatch($command);
+            $command  = new CreateAUser(new User($userId, $name));
+            $this->commandBus->dispatch($command);
 
-        return new JsonResponse([
-            'id' => (string) $userId
-        ]);
+            return new JsonResponse([
+                'id' => (string) $userId
+            ]);
+        } catch (Throwable $exception) {
+            return new JsonResponse([
+                'status' => 'error',
+                'reason' => $exception->getMessage()
+            ]);
+        }
     }
 
     public function getUsersAction(Request $request)
     {
-        $readModel = $this->userRepository->findAll();
+        try {
+            $readModel = $this->userRepository->findAll();
 
-        if (null === $readModel) {
-            return new JsonResponse('error', Response::HTTP_NOT_FOUND);
-        }
-        $registeredUsers = [];
-        foreach ($readModel as $item) {
-            $registeredUsers[] = $item->serialize();
-        }
+            if (is_null($readModel)) {
+                throw new ReadModelNotAvailable();
+            }
 
-        return new JsonResponse($registeredUsers);
+            $registeredUsers = [];
+            foreach ($readModel as $item) {
+                $registeredUsers[] = $item->serialize()['registeredUsers'];
+            }
+
+            return new JsonResponse($registeredUsers);
+        } catch (Throwable $exception) {
+            return new JsonResponse([
+                'status' => 'error',
+                'reason' => $exception->getMessage()
+            ]);
+        }
     }
 
     public function addFriendAction(Request $request): JsonResponse
