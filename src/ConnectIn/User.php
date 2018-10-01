@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ConnectIn;
 
-class User
+class User implements ValueObject
 {
     /** @var UserId */
     private $userId;
@@ -25,5 +25,10 @@ class User
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function equals(ValueObject $user): bool
+    {
+        return $this->userId == $user->userId;
     }
 }

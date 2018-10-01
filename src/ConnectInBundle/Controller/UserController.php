@@ -10,7 +10,7 @@ use Broadway\UuidGenerator\UuidGeneratorInterface;
 use ConnectIn\Command\AddFriend;
 use ConnectIn\Command\CreateAUser;
 use ConnectIn\Exception\NoRegisteredUserException;
-use ConnectIn\Exception\ReadModelNotAvailable;
+use ConnectIn\Exception\ReadModelNotAvailableException;
 use ConnectIn\User;
 use ConnectIn\UserId;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -63,7 +63,7 @@ class UserController
             $readModel = $this->userRepository->findAll();
 
             if (is_null($readModel)) {
-                throw new ReadModelNotAvailable();
+                throw new ReadModelNotAvailableException();
             }
 
             $registeredUsers = [];

@@ -5,7 +5,7 @@ services:
       - '@broadway.command_handling.command_bus'
       - '@broadway.uuid.generator'
       - '@connect_in.read_model.repository.registered_users'
-      
+
   connect_in.controller.list_of_friends_for_a_user:
     class: ConnectInBundle\Controller\ListOfFriendsForAUserController
     arguments:
