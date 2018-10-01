@@ -1,2 +1,2 @@
-/cache/
-!/cache/dev.events.sqlite
+cache/*
+!cache/dev.events.sqlite
